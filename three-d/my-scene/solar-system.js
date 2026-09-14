@@ -89,6 +89,7 @@ planets.add(saturnRing);
 scene.add(planets);
 
 
+
 // 窗口resize适配
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -96,9 +97,44 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+
+
 const animate = () => {
   requestAnimationFrame(animate);
+
+  // 太阳自转
+  sun.rotation.y += 0.003;
+
+  // 行星绕太阳公转+自身自转
+  const t = Date.now() * 0.001;
+  mercury.position.x = Math.cos(t * 1.2) * 2.2;
+  mercury.position.z = Math.sin(t * 1.2) * 2.2;
+  mercury.rotation.y += 0.02;
+
+  venus.position.x = Math.cos(t * 0.9) * 3.2;
+  venus.position.z = Math.sin(t * 0.9) * 3.2;
+  venus.rotation.y += 0.015;
+
+  earth.position.x = Math.cos(t * 0.6) * 4.3;
+  earth.position.z = Math.sin(t * 0.6) * 4.3;
+  earth.rotation.y += 0.01;
+
+  mars.position.x = Math.cos(t * 0.45) * 5.4;
+  mars.position.z = Math.sin(t * 0.45) * 5.4;
+  mars.rotation.y += 0.012;
+
+  jupiter.position.x = Math.cos(t * 0.2) * 7;
+  jupiter.position.z = Math.sin(t * 0.2) * 7;
+  jupiter.rotation.y += 0.008;
+
+  saturn.position.x = Math.cos(t * 0.12) * 9;
+  saturn.position.z = Math.sin(t * 0.12) * 9;
+  saturnRing.position.x = saturn.position.x;
+  saturnRing.position.z = saturn.position.z;
+  saturn.rotation.y += 0.007;
+
   controls.update();
   renderer.render(scene, camera);
 };
+
 animate();
